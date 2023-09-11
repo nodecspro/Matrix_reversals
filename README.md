@@ -1,5 +1,3 @@
-# Matrix_reversals
-
 ## English
 
 The code is a Python implementation of a matrix calculator that computes an inverse matrix using the Gaussian elimination method. The program includes a graphical user interface (GUI) built with the tkinter library. The GUI features a combobox that enables users to select the matrix dimension they want to invert. After selecting the dimension, users can click the "Create matrix" button to open a new window for inputting matrix values. The matrix input window consists of a two-level window with a grid of entry widgets for entering matrix values. Once the values are entered, users can click the "Calculate inverse matrix" button to compute the inverse of the matrix. In case of a singular matrix, the program displays an error message indicating that the inverse matrix does not exist.
