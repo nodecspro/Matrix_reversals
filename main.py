@@ -41,6 +41,7 @@ class MatrixCalculator:
             self.main_frame,
             textvariable=self.dimension_var,
             values=[str(i) for i in range(2, 11)],
+            state="readonly",
         )
         self.dimension_combobox.grid(row=0, column=1, padx=5, pady=5)
         self.dimension_combobox.set("2")
@@ -109,6 +110,8 @@ class MatrixCalculator:
         try:
             float(value)
             if value.startswith("+") or " " in value:
+                return False
+            if value.count("0") > 1 and value[0] == "0" and value[1] != ".":
                 return False
             return True
         except ValueError:
