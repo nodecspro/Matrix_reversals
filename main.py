@@ -27,6 +27,7 @@ class MatrixCalculator:
         Параметры:
             - root: корневой объект ctk
         """
+
         self.root = root
         root.title("Калькулятор обратной матрицы")
 
@@ -49,7 +50,11 @@ class MatrixCalculator:
         self.dimension_combobox.set("2")
 
         self.create_matrix_button = ctk.CTkButton(
-            self.main_frame, text="Создать матрицу", command=self.create_matrix_window
+            self.main_frame,
+            text="Создать матрицу",
+            command=self.create_matrix_window,
+            fg_color="#4B0082",
+            hover_color="#5f02a6",
         )
         self.create_matrix_button.grid(row=0, column=2, padx=5, pady=5)
 
@@ -157,6 +162,8 @@ class MatrixCalculator:
                 self.matrix_window,
                 text="Посчитать обратную матрицу",
                 command=lambda: self.calculate_inverse(matrix_entries, dimension),
+                fg_color="#4B0082",
+                hover_color="#5f02a6",
             )
             calculate_button.grid(row=dimension, columnspan=dimension, padx=5, pady=10)
 
