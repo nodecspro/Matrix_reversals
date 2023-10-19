@@ -175,6 +175,7 @@ class MatrixCalculator:
         if self.matrix_window is not None:
             self.matrix_window.withdraw()
             self.matrix_window = None
+            self.main_frame.grab_set()
 
     def calculate_inverse(self, matrix_entries, dimension):
         """
