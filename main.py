@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 
+import customtkinter as ctk
 import numpy as np
+from customtkinter import CTkToplevel
 
 
 class MatrixCalculator:
@@ -28,28 +30,31 @@ class MatrixCalculator:
         self.root = root
         self.root.title("Обратная матрица")
 
-        self.main_frame = ttk.Frame(self.root)
+        self.main_frame = ctk.CTkFrame(self.root)
         self.main_frame.grid(row=0, column=0, padx=10, pady=10)
 
-        self.dimension_label = ttk.Label(
+        self.dimension_label = ctk.CTkLabel(
             self.main_frame, text="Выберите размерность матрицы:"
         )
         self.dimension_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
-        self.dimension_var = tk.StringVar()
-        self.dimension_combobox = ttk.Combobox(
+        self.dimension_var = ctk.StringVar()
+        self.dimension_combobox = ctk.CTkComboBox(
             self.main_frame,
-            textvariable=self.dimension_var,
+            variable=self.dimension_var,
             values=[str(i) for i in range(2, 11)],
             state="readonly",
         )
+
         self.dimension_combobox.grid(row=0, column=1, padx=5, pady=5)
         self.dimension_combobox.set("2")
 
-        self.create_matrix_button = ttk.Button(
+        self.create_matrix_button = ctk.CTkButton(
             self.main_frame, text="Создать матрицу", command=self.create_matrix_window
         )
         self.create_matrix_button.grid(row=0, column=2, padx=5, pady=5)
+
+        root.eval("tk::PlaceWindow . center")
 
         self.matrix_window = None
 
@@ -133,27 +138,30 @@ class MatrixCalculator:
             if dimension < 2 or dimension > 10:
                 raise ValueError("Размерность матрицы должна быть от 2 до 10.")
 
-            self.matrix_window = tk.Toplevel(self.root)
+            self.matrix_window = CTkToplevel(self.root)
             self.matrix_window.title("Ввод матрицы")
+            self.matrix_window.grab_set()
 
             matrix_entries = []
             for i in range(dimension):
                 row_entries = []
                 for j in range(dimension):
-                    entry = ttk.Entry(self.matrix_window, width=5)
+                    entry = ctk.CTkEntry(self.matrix_window, width=48, justify="center")
                     entry.grid(row=i, column=j, padx=5, pady=5)
                     entry.insert(0, "")
                     vcmd = (entry.register(lambda P: self.is_valid_number(P)), "%P")
-                    entry.config(validate="key", validatecommand=vcmd)
+                    entry.configure(validate="key", validatecommand=vcmd)
                     row_entries.append(entry)
                 matrix_entries.append(row_entries)
 
-            calculate_button = ttk.Button(
+            calculate_button = ctk.CTkButton(
                 self.matrix_window,
                 text="Посчитать обратную матрицу",
                 command=lambda: self.calculate_inverse(matrix_entries, dimension),
             )
             calculate_button.grid(row=dimension, columnspan=dimension, padx=5, pady=10)
+
+            self.root.eval(f"tk::PlaceWindow {str(self.matrix_window)} center")
 
             self.matrix_window.protocol("WM_DELETE_WINDOW", self.hide_matrix_window)
 
@@ -205,19 +213,22 @@ class MatrixCalculator:
         Параметры:
             - inverse_matrix: массив numpy, представляющий инвертированную матрицу
         """
-        result_window = tk.Toplevel(self.root)
-        result_window.title("Результат")
+        self.result_window = CTkToplevel(self.root)
+        self.result_window.title("Результат")
+        self.result_window.grab_set()
 
         dimension = len(inverse_matrix)
         for i in range(dimension):
             for j in range(dimension):
-                entry = ttk.Entry(result_window, width=10)
+                entry = ctk.CTkEntry(self.result_window, width=48, justify="center")
                 entry.grid(row=i, column=j, padx=5, pady=5)
                 entry.insert(0, f"{inverse_matrix[i][j]:.2f}")
                 entry.configure(state="readonly")
 
+        self.root.eval(f"tk::PlaceWindow {str(self.result_window)} center")
+
 
 if __name__ == "__main__":
-    app = tk.Tk()
+    app = ctk.CTk()
     MatrixCalculator(app)
     app.mainloop()
