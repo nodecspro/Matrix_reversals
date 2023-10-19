@@ -11,7 +11,7 @@ class MatrixCalculator:
     Класс для вычисления обратной матрицы методом исключения Гаусса.
 
     Атрибуты:
-        - root: корневой объект Tk
+        - root: корневой объект ctk
         - main_frame: основной фрейм графического интерфейса
         - dimension_label: метка для выбора размерности матрицы
         - dimension_var: строковый переменный для хранения выбранной размерности
@@ -25,12 +25,12 @@ class MatrixCalculator:
         Инициализирует объект MatrixCalculator.
 
         Параметры:
-            - root: корневой объект Tk
+            - root: корневой объект ctk
         """
         self.root = root
-        self.root.title("Обратная матрица")
+        root.title("Калькулятор обратной матрицы")
 
-        self.main_frame = ctk.CTkFrame(self.root)
+        self.main_frame = ctk.CTkFrame(root)
         self.main_frame.grid(row=0, column=0, padx=10, pady=10)
 
         self.dimension_label = ctk.CTkLabel(
@@ -45,7 +45,6 @@ class MatrixCalculator:
             values=[str(i) for i in range(2, 11)],
             state="readonly",
         )
-
         self.dimension_combobox.grid(row=0, column=1, padx=5, pady=5)
         self.dimension_combobox.set("2")
 
