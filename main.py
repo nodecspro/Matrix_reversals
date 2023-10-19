@@ -144,6 +144,9 @@ class MatrixCalculator:
 
             self.matrix_window = CTkToplevel(self.root)
             self.matrix_window.title("Ввод матрицы")
+            self.matrix_window.after(
+                199, lambda: self.matrix_window.iconbitmap("icon.ico")
+            )
             self.matrix_window.grab_set()
 
             matrix_entries = []
@@ -222,6 +225,7 @@ class MatrixCalculator:
         """
         self.result_window = CTkToplevel(self.root)
         self.result_window.title("Результат")
+        self.result_window.after(199, lambda: self.result_window.iconbitmap("icon.ico"))
         self.result_window.grab_set()
 
         dimension = len(inverse_matrix)
@@ -237,5 +241,6 @@ class MatrixCalculator:
 
 if __name__ == "__main__":
     app = ctk.CTk()
+    app.iconbitmap("icon.ico")
     MatrixCalculator(app)
     app.mainloop()
